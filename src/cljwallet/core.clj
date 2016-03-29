@@ -27,6 +27,9 @@
                     (println newBal))))
   (. wallet addEventListener listener)
 
+
+
+  ;; USE COMPOJURE INSTEAD!!!
   (defn app [req]
     {:status 200
      :header {"Content-Type" "text/html"}
