@@ -12,25 +12,23 @@
 ;  (let [{a :body} addressInfo]
 ;    (print a)))
 
-;(defn -main [& args]
-;  (def params (. MainNetParams get))
-;  (def filePrefix "forwarding-service")
-;;  (def forwardingAddress (new Address params "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"))
-;  (def kit (new WalletAppKit params (new File ".") filePrefix))
-;  (. kit startAsync)
-;  (. kit awaitRunning)
-;  (def wallet (. kit wallet))
-;  (println (. (. wallet getBalance) getValue))
-;  
-;  (def listener (proxy [org.bitcoinj.core.AbstractWalletEventListener] []
-;                  (onCoinsReveived [w tx prevBal newBal]
-;                    (println newBal))))
-;  (. wallet addEventListener listener)
-;  (read-line))
-
 (defn -main [& args]
+  (def params (. MainNetParams get))
+  (def filePrefix "forwarding-service")
+;  (def forwardingAddress (new Address params "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"))
+  (def kit (new WalletAppKit params (new File ".") filePrefix))
+  (. kit startAsync)
+  (. kit awaitRunning)
+  (def wallet (. kit wallet))
+  (println (. (. wallet getBalance) getValue))
+  
+  (def listener (proxy [org.bitcoinj.core.AbstractWalletEventListener] []
+                  (onCoinsReveived [w tx prevBal newBal]
+                    (println newBal))))
+  (. wallet addEventListener listener)
+
   (defn app [req]
     {:status 200
      :header {"Content-Type" "text/html"}
-     :body "Hello HTTP!"})
+     :body (str "Balance: " (. (. wallet getBalance) getValue))})
   (server/run-server app {:port 8080}))
