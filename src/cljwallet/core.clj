@@ -1,7 +1,11 @@
 (ns cljwallet.core
+  (:use compojure.core)
   (:require [clojure.data.json :as json]
             [org.httpkit.client :as http]
-            [org.httpkit.server :as server])
+            [org.httpkit.server :as server]
+            [compojure.route :as route]
+            [compojure.handler :as handler]
+            [compojure.response :as response])
   (:import  (org.bitcoinj.params MainNetParams)
             (org.bitcoinj.core Address AbstractWalletEventListener)
             (org.bitcoinj.kits WalletAppKit)
@@ -29,9 +33,15 @@
 
 
 
+  (defn show-landing-page [req] (str "Landing Page."))
+  (defn show-send-page [req] (str "Send Page."))
+
   ;; USE COMPOJURE INSTEAD!!!
-  (defn app [req]
-    {:status 200
-     :header {"Content-Type" "text/html"}
-     :body (str "Balance: " (. (. wallet getBalance) getValue))})
-  (server/run-server app {:port 8080}))
+  (defroutes my-routes
+    (GET "/foo" [] "Hello Foo")
+    (GET "/bar" [] "Hello Bar"))
+;  (defn app [req]
+;    {:status 200
+;     :header {"Content-Type" "text/html"}
+;     :body (str "Balance: " (. (. wallet getBalance) getValue))})
+  (server/run-server (handler/site #'my-routes) {:port 8080}))
