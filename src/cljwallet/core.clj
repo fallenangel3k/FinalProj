@@ -38,8 +38,11 @@
 
   ;; USE COMPOJURE INSTEAD!!!
   (defroutes my-routes
-    (GET "/foo" [] "Hello Foo")
-    (GET "/bar" [] "Hello Bar"))
+    (GET "/" [] show-landing-page)
+    (GET "/bar" [] "Hello Bar")
+    (POST "/spend" req
+          (let [title (get (:params req) :title)]
+            (println "Title: " title))))
 ;  (defn app [req]
 ;    {:status 200
 ;     :header {"Content-Type" "text/html"}
