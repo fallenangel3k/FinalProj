@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Clojure Wallet</title>
+	</head>
+	<body>
+		<h1>Clojure Wallet</h1>
+		<p>Address: {{address}}
+		<p>Satoshi: {{satoshi}}</p>
+		<p>Send: <input type="text" id="satoshi"></input> Satoshi to: <input type="text" id="address"></input> <button onClick="send()">Send!</button></p>
+	
+		<script>
+			function send() {
+				alert(document.getElementById("satoshi").value/100000000);
+
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					alert(xhttp.responseText);
+				};
+				xhttp.open("GET", "send/?satoshi=" + document.getElementById("satoshi").value/100000000 + "&address=" + document.getElementById("address").value, true);
+				xhttp.send();
+			}
+		</script>
+	</body>
+</html> 

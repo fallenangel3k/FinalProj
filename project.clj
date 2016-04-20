@@ -9,7 +9,8 @@
                  [org.bitcoinj/bitcoinj-core "0.13.5"]
                  [ring "1.4.0"]
                  [compojure "1.5.0"]
-                 [javax.servlet/servlet-api "2.5"]]
+                 [javax.servlet/servlet-api "2.5"]
+                 [stencil "0.5.0"]]
   :main ^:skip-aot cljwallet.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
